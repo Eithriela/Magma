@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magma</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav id="navbar"> 
+            <button class="navbar-item" onclick="location.href='http://localhost:3000/'">Home</button>
+            <button class="navbar-item" onclick="location.href='http://localhost:3000/products'">Products</button>
+            <button class="navbar-item" onclick="location.href='http://localhost:3000/about'">About</button>
+        </nav>
+    </header>
+    <main>
+    <% for (let i = 0; i < products.length; i++) { %>
+        <button class="product" onclick="location.href='http://localhost:3000/product?id=<%=products[i].idproducts%>'">
+            <div class="product-label">
+            <% if (products[i].pictureurl) { %>
+                <img class="product-image" src="/images/<%= products[i].pictureurl %>">
+            <% } %>
+            <% if (!products[i].pictureurl) { %>
+                <img class="product-image" src="NoImageAvailable.jpg">
+            <% } %>
+            </div>
+            <div class="product-content">
+            <h3><%= products[i].name %></h3>
+            <div class="product-price">€ <%= products[i].price %></div>
+            </div>
+        </button>
+    <% } %>
+</main>
+
+</body>
+</html>
