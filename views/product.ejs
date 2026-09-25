@@ -15,8 +15,16 @@
         </nav>
     </header>
     <main>
-    
-    
+        <div class="product-details-wrapper">
+        <div class="product-details-image"><img src="images/<%= product[0].pictureurl %>" alt="<%= product[0].name %>">
+        </div>
+    <div class="product-details-content">
+        <h1 class="product-details-title"><%= product[0].name %></h1>
+        <div class="product-details-size">Размер: <%= product[0].size %></div>
+        
+    </div>
+    <div class="product-details-price">€ <%= product[0].price %></div>
+    </div>
 </main>
 
 </body>

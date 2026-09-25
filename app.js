@@ -21,6 +21,17 @@ app.get('/products', (req, res) => {
     });
   
 });
+app.get('/product', (req, res) => {
+    getProduct(req.query.id, (err, product) => {
+        res.render('product', { product: product });
+    });
+  
+});
+app.get('/searchproducts', (req, res) => {
+    Search(req.query.search, (err, result) => {
+        res.status(200).send(JSON.stringify(result));
+    });
+});
 app.get('/about', (req, res) => {
   res.render('about');
 });
@@ -57,6 +68,39 @@ function getAllProducts(callback) {
         } 
         else {
             callback(null, results);
+        }
+    });
+}
+function getProduct(id, callback) {
+    connection.query('SELECT * FROM products WHERE idproducts = ?', [id], (err, results) => {
+        if (err) {
+            console.log('Error fetching products: ', err);
+            callback(err, null);
+        } 
+        else {
+            callback(null, results);
+        }
+    });
+}
+function Search (text, callback) {
+    text += '%';
+    let sql = 'SELECT * FROM products WHERE name LIKE ?';
+    connection.query(sql, text, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            let text2 = '%' + text;
+            let sql2 = 'SELECT * FROM products WHERE name LIKE ? AND name NOT LIKE "'+text+'"';
+            connection.query(sql2, text2, (err, result2) => {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    result = result.concat(result2);
+                    callback(err, result);
+                }
+            });
         }
     });
 }
